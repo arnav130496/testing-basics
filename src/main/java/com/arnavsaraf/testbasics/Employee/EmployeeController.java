@@ -6,6 +6,7 @@ import lombok.AllArgsConstructor;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
+import java.util.Optional;
 
 @RestController
 @AllArgsConstructor
@@ -14,36 +15,36 @@ public class EmployeeController {
     EmployeeService service;
 
     @GetMapping("/all/employee")
-    public List<Employee> fetchEmployeeById(){
+    public List<Employee> fetchEmployeeById() throws Exception {
         List<Employee> employee = service.fetchAllEmployees();
         return employee;
     }
 
     @GetMapping("/employee/id/{id}")
-    public Employee fetchEmployeeById(@PathVariable("id") Long id){
+    public Employee fetchEmployeeById(@PathVariable("id") Long id)throws Exception {
         Employee employee = service.fetchEmployeeDetailsById(id);
         return employee;
     }
 
     @GetMapping("/employee/email/{email}")
-    public Employee fetchEmployeeDetailsByEmail(@PathVariable("email") String email){
+    public Employee fetchEmployeeDetailsByEmail(@PathVariable("email") String email)throws Exception {
         Employee employee = service.fetchEmployeeDetailsByEmail(email);
         return employee;
     }
 
     @PostMapping("/employee")
-    public void insertEmployeeData(@RequestBody Employee employeeData){
+    public void insertEmployeeData(@RequestBody Employee employeeData)throws Exception {
             service.insertEmployeeData(employeeData);
     }
 
 
-    @PatchMapping("/employee/id/{id}")
+    @PutMapping("/employee/id/{id}")
     public void updateEmployeeData(@PathVariable("id") Long id, @RequestBody EmployeeUpdateRequest employeeData) throws Exception {
         service.updateEmployeeData(id,employeeData);
     }
 
     @DeleteMapping("/employee/id/{id}")
-    public void removeEmployeeById(@PathVariable("id") Long id){
+    public void removeEmployeeById(@PathVariable("id") Long id)throws Exception {
         service.removeEmployeeById(id);
     }
 

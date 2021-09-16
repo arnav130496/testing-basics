@@ -1,12 +1,16 @@
 package com.arnavsaraf.testbasics.Employee.model;
 
+import lombok.AllArgsConstructor;
 import lombok.Data;
+import lombok.NoArgsConstructor;
 
 import javax.validation.constraints.Email;
 import javax.validation.constraints.NotEmpty;
 import javax.validation.constraints.Pattern;
 
 @Data
+@AllArgsConstructor
+@NoArgsConstructor
 public class EmployeeUpdateRequest {
 
     @Email(message = "Email must be valid")

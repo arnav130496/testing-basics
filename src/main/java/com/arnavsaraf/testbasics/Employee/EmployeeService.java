@@ -7,15 +7,15 @@ import java.util.List;
 
 public interface EmployeeService {
 
-    Employee fetchEmployeeDetailsById(Long id);
+    Employee fetchEmployeeDetailsById(Long id) throws Exception;
     
-    Employee fetchEmployeeDetailsByEmail(String email);
+    Employee fetchEmployeeDetailsByEmail(String email)throws Exception;
 
-    void insertEmployeeData(Employee employeeData);
+    void insertEmployeeData(Employee employeeData)throws Exception;
 
     void updateEmployeeData(Long id, EmployeeUpdateRequest employeeData) throws Exception;
 
-    void removeEmployeeById(Long id);
+    void removeEmployeeById(Long id)throws Exception;
 
-    List<Employee> fetchAllEmployees();
+    List<Employee> fetchAllEmployees() throws Exception;
 }

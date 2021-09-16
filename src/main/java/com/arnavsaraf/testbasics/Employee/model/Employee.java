@@ -1,7 +1,9 @@
 package com.arnavsaraf.testbasics.Employee.model;
 
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
+import lombok.AllArgsConstructor;
 import lombok.Data;
+import lombok.NoArgsConstructor;
 
 import javax.persistence.*;
 import javax.validation.constraints.Email;
@@ -13,6 +15,8 @@ import java.io.Serializable;
 
 @Entity
 @Data
+@AllArgsConstructor
+@NoArgsConstructor
 @Table(name = "employee", uniqueConstraints= @UniqueConstraint(columnNames={"email"}))
 @JsonIgnoreProperties({"hibernateLazyInitializer", "handler"})
 public class Employee{
