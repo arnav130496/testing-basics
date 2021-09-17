@@ -10,7 +10,9 @@ public interface EmployeeRepository extends JpaRepository<Employee, Long> {
 
 
     @Query(value = "SELECT * from employee where id= ?1", nativeQuery = true)
-    public Employee getById(Long id);
+    Employee getById(Long id);
     @Query(value = "SELECT * from employee where email= ?1", nativeQuery = true)
-    public Employee getByEmail(String email);
+    Employee getByEmail(String email);
+    @Query(value = "SELECT CASE WHEN COUNT(e) > 0 THEN TRUE ELSE FALSE END FROM employee e WHERE e.email = ?1", nativeQuery = true)
+    Boolean existsByEmail(String email);
 }

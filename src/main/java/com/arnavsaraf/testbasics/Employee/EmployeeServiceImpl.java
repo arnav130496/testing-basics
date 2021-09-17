@@ -4,6 +4,7 @@ import com.arnavsaraf.testbasics.Employee.model.Employee;
 import com.arnavsaraf.testbasics.Employee.model.EmployeeUpdateRequest;
 import com.arnavsaraf.testbasics.Employee.utils.NoDataException;
 import lombok.AllArgsConstructor;
+import lombok.NoArgsConstructor;
 import org.springframework.dao.EmptyResultDataAccessException;
 import org.springframework.stereotype.Service;
 import javax.validation.Valid;
@@ -50,7 +51,10 @@ public class EmployeeServiceImpl implements  EmployeeService{
 
     @Override
     public void insertEmployeeData(@Valid  Employee employeeData) throws Exception{
-
+        String empEmail = employeeData.getEmail();
+        if(employeeRepository.existsByEmail(empEmail)){
+            throw new RuntimeException("Email already used");
+        }
         employeeRepository.save(employeeData);
     }
 
@@ -80,11 +84,11 @@ public class EmployeeServiceImpl implements  EmployeeService{
     @Override
     public void removeEmployeeById(Long id)throws Exception {
         try {
+            Employee employee = employeeRepository.getById(id);
+            if(employee==null){
+                throw new NoDataException("Could not find the data");
+            }
             employeeRepository.deleteById(id);
-        }
-        catch (EmptyResultDataAccessException e){
-            e.printStackTrace();
-            throw new NoDataException("Could not find the data");
         }
         catch (Exception e){
             e.printStackTrace();
