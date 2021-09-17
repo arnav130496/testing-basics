@@ -10,7 +10,9 @@ import org.mockito.Mock;
 import org.mockito.junit.jupiter.MockitoExtension;
 
 import static org.junit.jupiter.api.Assertions.*;
+import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.BDDMockito.given;
+import static org.mockito.Mockito.never;
 import static org.mockito.Mockito.verify;
 
 @ExtendWith(MockitoExtension.class)
@@ -114,29 +116,8 @@ class EmployeeServiceImplTest {
         //then
         RuntimeException myException =  assertThrows(RuntimeException.class, () -> service.insertEmployeeData(employee), "Should fail for email duplicate");
         assertTrue(myException.getMessage().contains("Email already used"),"Exception Message must contain the words 'Email already used' ");
-    }
-
-    @Test
-    @DisplayName("Verifying if employee inserted is not same as intended")
-    void verifyInsertEmployeeIsNotSame() throws Exception {
-
-        //given
-        Employee employee = new Employee(1L,"a@gmail.com",
-                "SWE","Software Dev","A Tester","9000000000");
-
-        Employee employee2 = new Employee(2L,"b@gmail.com",
-                "SWE","Software Dev","B Tester","9000000000");
-
-        //when
-        service.insertEmployeeData(employee);
-
-        //then
-        ArgumentCaptor<Employee> argumentCaptor = ArgumentCaptor.forClass(Employee.class);
-        verify(repository).save(argumentCaptor.capture());
-
-        Employee captured = argumentCaptor.getValue();
-
-        assertNotEquals(employee2,captured,"The employee passed as argument of save must not be same as employee object");
+        //verifying that save method is not called
+        verify(repository,never()).save(any());
     }
 
     @Test
@@ -179,6 +160,8 @@ class EmployeeServiceImplTest {
         //then
         Exception myException = assertThrows(NoDataException.class, ()-> service.updateEmployeeData(1L, employeeUpdateRequest),"Should throw exception when employee not found");
         assertTrue(myException.getMessage().contains("Could not find the data"),"Exception Message must contain the words 'Could not find the data' ");
+        //verifying that save method is not called
+        verify(repository,never()).save(any());
     }
 
     @Test
@@ -213,6 +196,8 @@ class EmployeeServiceImplTest {
         //then
         Exception myException = assertThrows(NoDataException.class, ()-> service.removeEmployeeById(1L),"Should throw exception when employee not found");
         assertTrue(myException.getMessage().contains("Could not find the data"),"Exception Message must contain the words 'Could not find the data' ");
+        //verifying that deleteById method is not called
+        verify(repository,never()).deleteById(any());
     }
 
 

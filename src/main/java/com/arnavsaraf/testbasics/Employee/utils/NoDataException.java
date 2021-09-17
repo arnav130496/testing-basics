@@ -9,17 +9,13 @@ import org.springframework.web.bind.annotation.ResponseStatus;
 public class NoDataException  extends RuntimeException {
 
     private static final long serialVersionUID = 1L;
+    String message;
 
     @Override
     public String getMessage() {
         return message;
     }
 
-    public void setMessage(String message) {
-        this.message = message;
-    }
-
-    String message;
 
     public NoDataException(String message) {
         this.message = message;
